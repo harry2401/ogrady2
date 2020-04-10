@@ -29,6 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TITLE = "O'Grady Court"
 
 # Application definition
 
