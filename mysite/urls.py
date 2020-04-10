@@ -4,7 +4,6 @@ from django.conf                import settings
 from django.conf.urls.static    import static
 from .                          import views
 from .views                     import PhotoInsert
-#from .views                     import PhotoBInsert
 urlpatterns = [
     path('logout/',                             views.logout,                    {'next_page': settings.LOGOUT_REDIRECT_URL},  name='logout'),
     path('accounts/',                           include('django.contrib.auth.urls')),

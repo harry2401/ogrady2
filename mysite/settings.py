@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-#    "hello",
     "mysite",
     "users",
     "events",
@@ -121,5 +120,7 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = "/static/"
+
+LOGOUT_REDIRECT_URL = '/'
 
 django_heroku.settings(locals())
