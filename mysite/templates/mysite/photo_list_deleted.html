@@ -11,13 +11,8 @@
 <ul>
   {% for photo in photos %}
      <hr>
-     {% if activeperson.status >= 55 %}
-      <a class="btn btn-default" href="{% url 'photoauthorupdate'   pk=photo.pk %}"><span>Update author</span></a>
-      <a class="btn btn-default" href="{% url 'photopriorityupdate' pk=photo.pk %}"><span>Update priority</span></a>
+     {% if activeperson.status >= 60 %}
       <a class="btn btn-default" href="{% url 'phototitleupdate'    pk=photo.pk %}"><span>Update title</span></a>
-      <a class="btn btn-default" href="{% url 'photorestore'        pk=photo.pk %}"><span>Restore photo</span></a>
-      <a class="btn btn-default" href="{% url 'photodeleteperm'     pk=photo.pk %}"><span>Delete photo permanantly</span></a>
-    {% elif activeperson.username == photo.authorname %}
       <a class="btn btn-default" href="{% url 'photorestore'        pk=photo.pk %}"><span>Restore photo</span></a>
       <a class="btn btn-default" href="{% url 'photodeleteperm'     pk=photo.pk %}"><span>Delete photo permanantly</span></a>
     {% endif %}
@@ -30,4 +25,9 @@
 </body>
 {% endblock content %}
 {% comment %}
+      <a class="btn btn-default" href="{% url 'photoauthorupdate'   pk=photo.pk %}"><span>Update author</span></a>
+      <a class="btn btn-default" href="{% url 'photopriorityupdate' pk=photo.pk %}"><span>Update priority</span></a>
+    {% elif activeperson.username == photo.authorname %}
+      <a class="btn btn-default" href="{% url 'photorestore'        pk=photo.pk %}"><span>Restore photo</span></a>
+      <a class="btn btn-default" href="{% url 'photodeleteperm'     pk=photo.pk %}"><span>Delete photo permanantly</span></a>
 {% endcomment %}

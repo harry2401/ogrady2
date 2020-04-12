@@ -204,7 +204,6 @@ def restore(request, pk):
 
 # functions which update the database in two stages,  using forms
 # but don't require a pk as they don't refer to an existing record
-"""
 @login_required
 def event_insert(request):
   activeuser                                  =  User.objects.get(id=request.user.id)
@@ -291,6 +290,7 @@ def event_update(request, pk):
         or event.author                          ==  activeuser                 \
         or activeperson in event.hosts.all():
           amendment = Amendment(event=event, author=activeperson)
+          event.is_live                         = True
           event.save()
           amendment.save()
           form.save_m2m()
@@ -299,7 +299,6 @@ def event_update(request, pk):
           return render(request, 'events/insert_update.html', {'form': form})
     else:                                                                                  # i.e. form is not valid, ask user to resubmit it
       return render(request, 'events/insert_update.html', {'form': form})
-"""
 
 @login_required
 def hosts_update(request, pk):
@@ -420,7 +419,7 @@ def event_repeat(request, pk):
       or event_original.author                 ==  activeuser                 \
       or activeperson in event_original.hosts.all():
         event.author_name                     = activeuser.username
-        event.author                          = activeperson
+        event.author                          = activeuser
         updated_host                          = Person.objects.get(username=activeuser.username)        #(username = request.user)
         event.save()
         event.hosts.add(updated_host)

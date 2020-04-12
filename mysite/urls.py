@@ -11,7 +11,8 @@ urlpatterns = [
     path('admin/',                              admin.site.urls),
 #
 #
-    path('advertupdate',             	        views.advert_update,                                                           name='advertupdate'),
+    path('noticeupdate',             	        views.notice_update,                                                           name='noticeupdate'),
+    path('noticedelete',             	        views.notice_delete,                                                           name='noticedelete'),
     path('noteupdate',                          views.note_update,                                                             name='noteupdate'),
 #
 #
@@ -20,7 +21,7 @@ urlpatterns = [
 #
     path('photoinsert',                         PhotoInsert.as_view(),                                                         name='photoinsert'),
 #
-    path('photoauthorupdate/<int:pk>/',         views.photoauthor_update,                                                      name='photoauthorupdate'),
+    #path('photoauthorupdate/<int:pk>/',         views.photoauthor_update,                                                      name='photoauthorupdate'),
     path('photopriorityupdate/<int:pk>/',       views.photopriority_update,                                                    name='photopriorityupdate'),
     path('phototitleupdate/<int:pk>/',          views.phototitle_update,                                                       name='phototitleupdate'),
     path('photorestore/<int:pk>/',              views.photo_restore,                                                           name='photorestore'),
@@ -34,9 +35,11 @@ urlpatterns = [
 #
     path('enquiryinsert',                       views.enquiry_insert,                                                          name='enquiryinsert'),
 #
-    path('enquirydelete/<int:pk>/',             views.enquiry_delete,                                                          name='enquirydelete'),
+    path('enquirypriorityupdate/<int:pk>/',     views.enquirypriority_update,                                           name='enquirypriorityupdate'),
+    path('enquiryrestore/<int:pk>/',            views.enquiry_restore,                                                  name='enquiryrestore'),
+    path('enquirydelete/<int:pk>/',             views.enquiry_delete,                                                     name='enquirydelete'),
 #
-    path('enquirydeleteperm/<int:pk>/',         views.enquiry_deleteperm,                                                      name='enquirydeleteperm'),
+    path('enquirydeleteperm/<int:pk>/',         views.enquiry_deleteperm,                                                 name='enquirydeleteperm'),
 #
 #
     path('',                                    include('events.urls')),

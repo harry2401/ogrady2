@@ -2,24 +2,20 @@
 {% block content %}
 
     <h2>
-    {% comment %}
-    <a class="btn btn-default" href="{% url 'advertdisplay' %}" ><span>Club Settings</span></a>
-    {% endcomment %}
+    Notice {{site.notice| linebreaks}}
     </h2>
-
-    <h2>
-    Advert {{sitesettings.advert| linebreaks}}
-    </h2>
+{% comment %}
     <h2>
     Contact Info {{sitesettings.contact_info| linebreaks}}
     </h2>
+{% endcomment %}
 
     {% if error_message %}
       <h2 class="error">{{error_message}}</h2>
     {% endif %}
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Update the website for this advert</button>
+        <button type="submit" class="save btn btn-default">Update the website for this notice</button>
     </form>
-    <a class="btn btn-default" href="{% url 'eventlist' 'current' %}">View Events</a>
+    <a class="btn btn-default" href="{% url 'eventlist' 'current' %}">Main Page</a>
 {% endblock %}

@@ -1,18 +1,23 @@
 {% extends "mysite/base.html" %}
 {% block content %}
-<h1 class="label">Deleted Enquiries</h1>
+<h1 class="label">Deleted Messages</h1>
 <br><br>
     <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >Return to Main Page</span></a>
 <ul>
   {% for enquiry in enquirys %}
         <hr>
-     {% if activeperson.status == 55 %}
-        <h1 class="label">each deleted enquiry</h1>
+     {% if activeperson.status == 60 %}
+        <hr>
+        <h2><span class='date'> {{ enquiry.created_date|date:"l" }} {{ enquiry.created_date|date:"jS F Y g:i a" }} </span>
+        <a class="btn btn-default" href="{% url 'enquiryrestore'        pk=enquiry.pk %}"><span>Restore message</span></a>
+        <a class="btn btn-default" href="{% url 'enquirydeleteperm' pk=enquiry.pk %}"><span>Delete message permanantly</span></a></h2>
+        <h2><span class="attendees">{{ enquiry.content }}</span></h2>
     {% endif %}
   {% endfor %}
 </ul>
 </body>
 {% endblock content %}
 {% comment %}
+        <a class="btn btn-default" href="{% url 'enquirypriorityupdate' pk=photo.pk %}"><span>Update priority</span></a>
       <a class="btn btn-default" href="{% url 'enquirydeleteperm'     pk=enquiry.pk %}"><span>Delete enquiry permanantly</span></a>
 {% endcomment %}
