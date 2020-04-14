@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-#import django_heroku
-
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,7 +25,7 @@ SECRET_KEY = "CHANGE_ME!!!! (P.S. the SECRET_KEY environment variable will be us
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','ogrady.pythonanywhere.com']
 
 TITLE = "O'Grady Court"
 
@@ -74,7 +72,6 @@ TEMPLATES = [
     }
 ]
 
-#WSGI_APPLICATION = "gettingstarted.wsgi.application"
 WSGI_APPLICATION = "mysite.wsgi.application"
 
 
@@ -126,7 +123,5 @@ LOGOUT_REDIRECT_URL = '/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
-#django_heroku.settings(locals())
 
 #static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

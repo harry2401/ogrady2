@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models     import User
 from users.models                   import Person
 from mysite.models                  import Site, Photo
-from .models                        import Event,Notice,Amendment
-from .forms                         import EventForm, HostForm, AttendeeForm, NoticeForm
+from .models                        import Event,Amendment
+from .forms                         import EventForm, HostForm, AttendeeForm
 from mysite.settings                import TITLE
 
 from django.views.generic           import CreateView
@@ -54,7 +54,6 @@ def event_list(request, periodsought='current'):
         events = Event.objects.exclude(is_live=True, e_date__gte=timezone.now()).order_by('-e_date')
 
     site                                            =  get_object_or_404(Site)
-    notice                                    =  get_object_or_404(Notice).notice
     #if request.user.is_authenticated():
     if request.user.is_authenticated == True:
         activeuser                          = User.objects.get(id=request.user.id)
@@ -108,7 +107,7 @@ def event_list(request, periodsought='current'):
         events_augmented.append(event_augmented)
     photos 									= Photo.objects.filter(is_live=True).order_by('-priority')
     context = {'events': events_augmented, 'periodsought':periodsought, 'activeperson': activeperson, 'TITLE': TITLE, \
-	    'site': site, 'notice': notice, 'photos' : photos, 'logged_in' : request.user.is_authenticated}
+	    'site': site, 'photos' : photos, 'logged_in' : request.user.is_authenticated}
     return render(request, 'events/event_list.html', context)
 
 
@@ -431,40 +430,3 @@ def event_repeat(request, pk):
     else:                                                                                  # i.e. form is not valid, ask user to resubmit it
       return render(request, 'events/event_insert_update.html', {'form': form})
 
-@login_required
-def notice_update(request):
-  activeuser                                  =  User.objects.get(id=request.user.id)
-  activeperson                                =  Person.objects.get(username=activeuser.username)
-  #notice                                    = get_object_or_404(N, pk=pk)
-  notice                                    = Notice.objects.get()
-  if request.method                           == 'POST':
-    form = NoticeForm(request.POST, instance=notice)
-    if form.is_valid():
-      notice                                   = form.save(commit=False)
-      activeperson_status                     =  0
-      if request.user.is_authenticated == True:
-        activeuser                          =  User.objects.get(id=request.user.id)
-        activeperson_status                 =  20
-        try:
-          activeperson                    = Person.objects.get(username=activeuser.username)
-          activeperson_status             = activeperson.status
-        except:
-          pass
-      if activeperson_status                   >=  40:
-        notice.save()
-        form.save_m2m()
-        return redirect('eventlist', 'current')
-      else:
-        return render(request, 'events/notice_update.html', {'form': form})
-    else:                                                                                  # i.e. form is not valid, ask user to resubmit it
-      return render(request, 'events/notice_update.html', {'form': form})
-  else:
-    form = NoticeForm(instance=notice)
-    return render(request, 'events/notice_update.html', {'form': form})                   # ask user for event details
-
-@login_required
-def notice_delete(request):
-  notice                                    = Notice.objects.get()
-  notice.notice = ""
-  notice.save()
-  return redirect('eventlist', 'current')

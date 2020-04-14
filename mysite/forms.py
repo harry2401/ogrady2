@@ -7,7 +7,7 @@ class advertUpdateForm(forms.ModelForm):
     class Meta:
         model = Site
         fields = ( 'notice' ,)
-        #fields = ( 'notice' ,'contact_info' )
+        #fields = ( 'notice', )
 
 class noteUpdateForm(forms.ModelForm):
     class Meta:

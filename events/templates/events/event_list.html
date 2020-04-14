@@ -12,6 +12,8 @@
         {% endif %}
     {% endif %}
 
+
+
   {% if activeperson.status >= 60 %}
     {% if periodsought == 'current' %}
       <a class="btn btn-default" href="{% url 'eventinsert' %}" >
@@ -36,13 +38,6 @@
 {% endcomment %}
     <a class="btn btn-default" href="{% url 'usercolours' type='get' color='get' whence='events' %}"> <span>Colours</span></a>
   {% endif %}
-
-{% comment %}
-  {% if activeperson.status >= 60 %}
-    <a class="btn btn-default" href="{% url 'advertupdate' %}">
-    <span>Insert/Update a notice</span></a>
-  {% endif %}
-{% endcomment %}
 
   {% if activeperson.status >= 60 %}
     <a class="btn btn-default" href="{% url 'photolist' %}"><span>View photos</span></a>
@@ -70,23 +65,27 @@
   {% endif %}
 
 {% comment %}
-  {% if activeperson.status >= 55 %}
+  {% if activeperson.status >= 60 %}
     <a class="btn btn-default" href="{% url 'notedelete' %}"><span>Delete note</span></a>
   {% endif %}
 {% endcomment %}
 
-  {% if site.notice %}
-    <br><br>
-    <hr class=end>
-    <h1 class="label">Notice</h1>
-    <h2 class='item'><span class='detail'>{{site.notice}}</span></h2>
-  {% endif %}
+    {% if activeperson.status >= 60 %}
+      {% if site.notice %}
+      <br><br>
+      <hr class=end>
+      <h1 class="label">Notice</h1>
+      <h2 class='item'><span class='detail'>{{site.notice}}</span></h2>
+      {% endif %}
+    {% endif %}
 
-{% comment %}
-  {% if site.contact_info %}
-  <h2 class='item'><span class='detail'>{{site.contact_info}}</span></h2>
-  {% endif %}
-{% endcomment %}
+    {% comment %}
+    {% if activeperson.status >= 60 %}
+      {% if site.contact_info %}
+        <h2 class='item'><span class='detail'>{{site.contact_info}}</span></h2>
+      {% endif %}
+    {% endif %}
+    {% endcomment %}
 
 {% if events %}
 <br><br>
@@ -215,5 +214,9 @@
 </body>
 
 {% endblock content %}
+{% comment %}
+
+{% endcomment %}
+
 
 

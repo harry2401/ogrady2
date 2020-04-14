@@ -26,14 +26,6 @@ class Event(models.Model):
   def __str__(self):
     return self.detail_public
 
-class Notice(models.Model):
-  author                  = models.ForeignKey                             ('users.Person', related_name="authorn", on_delete=models.CASCADE)
-  notice                  = models.TextField                              ('Notice', blank=True, null=True, default='')
-  created_date            = models.DateTimeField                          (default=timezone.now)
-  last_accessed           = models.DateTimeField                          (default=timezone.now)
-  def __str__(self):
-    return self.notice
-
 class Amendment(models.Model):
   author                  = models.ForeignKey                             ('users.Person', related_name="authora", on_delete=models.CASCADE)
   event                   = models.ForeignKey                             ('events.Event', related_name="eventa", on_delete=models.CASCADE)

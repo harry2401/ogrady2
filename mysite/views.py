@@ -14,6 +14,7 @@ from .forms                         import PhotoInsertForm
 from .forms                         import PhotopriorityUpdateForm
 from .forms                         import PhototitleUpdateForm
 from .forms                         import EnquiryInsertForm
+from .forms                         import EnquirypriorityUpdateForm
 #from django.views.generic           import ListView
 from django.views.generic           import CreateView
 from django.views.generic           import UpdateView
@@ -31,19 +32,19 @@ def logout(request):
 def notice_update(request):
     activeuser                                                          =     User.objects.get(id=request.user.id)
     activeperson                                                        =     Person.objects.get(username=activeuser.username)
-    site                                                                =      get_object_or_404(Site)     
+    site                                                                =      get_object_or_404(Site)
 
-    if request.method                                                   != 	"POST": 
+    if request.method                                                   != 	"POST":
         form 				= 	                                            advertUpdateForm(instance=site)
         context				                                            =	{'form': form, 'site': site}
         return render				                                        (request, 'mysite/advert_update.html', context)
-    else:                                 
+    else:
         form                                                            = 	advertUpdateForm(request.POST, instance=site)
         if form.is_valid and activeperson.status >= 60:
             site                                                        =   form.save(commit=False)
-            site.save()        
+            site.save()
             return redirect                                                 ('eventlist' ,'current')
-        else:                                                                        
+        else:
             context                                                     =   {'form': form, 'site': site}
             return render                                                   (request, 'mysite/advert_update.html', context)
 
@@ -51,13 +52,13 @@ def notice_update(request):
 def notice_delete(request):
     activeuser                                                          =     User.objects.get(id=request.user.id)
     activeperson                                                        =     Person.objects.get(username=activeuser.username)
-    site                                                                =      get_object_or_404(Site)     
+    site                                                                =      get_object_or_404(Site)
 
     if  activeperson.status >= 60:
-        site.notice                                                 =   ''        
-        site.save()        
+        site.notice                                                 =   ''
+        site.save()
         return redirect                                                 ('eventlist' ,'current')
-    else:                                                                        
+    else:
         context                                                     =   {'form': form, 'site': site}
         return render                                                   (request, 'mysite/advert_update.html', context)
 

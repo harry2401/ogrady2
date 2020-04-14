@@ -26,8 +26,8 @@ urlpatterns = [
     path('eventdelete/<int:pk>/)',                        EventDelete.as_view(),                name='eventdelete'),
     path('eventdeleteperm/<int:pk>/)',                    views.event_deleteperm,             name='eventdeleteperm'),
 #
-    path('noticeupdate',                                  views.notice_update,                name='noticeupdate'),
-    path('noticedelete',                                  views.notice_delete,                name='noticedelete'),
+   # path('noticeupdate',                                  views.notice_update,                name='noticeupdate'),
+   # path('noticedelete',                                  views.notice_delete,                name='noticedelete'),
 ]
 
 if settings.DEBUG:

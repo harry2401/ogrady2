@@ -1,6 +1,6 @@
 from django                                 import forms
 from django.forms.widgets                   import CheckboxSelectMultiple
-from .models                                import Event,Notice
+from .models                                import Event
 from users.models                           import Person
 #from django.contrib.auth.models             import User
 
@@ -26,8 +26,3 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ('e_date', 'detail_public', 'detail_private', 'photo_cover')
-
-class NoticeForm(forms.ModelForm):
-    class Meta:
-        model = Notice
-        fields = ('notice',)
