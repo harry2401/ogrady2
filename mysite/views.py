@@ -89,19 +89,19 @@ def note_update(request):
 
 @login_required
 def photo_list(request):
-  activeuser                                                                      =     User.objects.get(id=request.user.id)
-  activeperson                                                                    =     Person.objects.get(username=activeuser.username)
-  photos                                                                          =     Photo.objects.filter(is_live=True).order_by('-priority')
-  context                                                                         =    {'photos': photos, 'activeperson' : activeperson}
-  return render                                                                         (request, 'mysite/photo_list.html', context)
+  activeuser                                         =     User.objects.get(id=request.user.id)
+  activeperson                                       =     Person.objects.get(username=activeuser.username)
+  photos                                             =     Photo.objects.filter(is_live=True).order_by('-priority','-created_date')
+  context                                            =     {'photos': photos, 'activeperson' : activeperson}
+  return render                                            (request, 'mysite/photo_list.html', context)
 
 @login_required
 def photo_list_deleted(request):
-  activeuser                                                                      =     User.objects.get(id=request.user.id)
-  activeperson                                                                    =     Person.objects.get(username=activeuser.username)
-  photos                                                                          =     Photo.objects.filter(is_live=False).order_by('-priority')
-  context                                                                         =    {'photos': photos, 'activeperson' : activeperson}
-  return render                                                                         (request, 'mysite/photo_list_deleted.html', context)
+  activeuser                                         =     User.objects.get(id=request.user.id)
+  activeperson                                       =     Person.objects.get(username=activeuser.username)
+  photos                                             =     Photo.objects.filter(is_live=False).order_by('-priority','-created_date')
+  context                                            =     {'photos': photos, 'activeperson' : activeperson}
+  return render                                            (request, 'mysite/photo_list_deleted.html', context)
 
 
 class PhotoInsert(CreateView):
