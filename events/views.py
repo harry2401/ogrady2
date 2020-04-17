@@ -105,7 +105,7 @@ def event_list(request, periodsought='current'):
         {"event":event, "attendees":attendees_string, "hosts":hosts_string, \
         'event_status_now': event_status_now, 'first_insert': amendments_list[0:1], 'amendments': amendments_list[1:]}
         events_augmented.append(event_augmented)
-    photos 									= Photo.objects.filter(is_live=True).order_by('-priority')
+    photos 									= Photo.objects.filter(is_live=True).order_by('-priority','-created_date')
     context = {'events': events_augmented, 'periodsought':periodsought, 'activeperson': activeperson, 'TITLE': TITLE, \
 	    'site': site, 'photos' : photos, 'logged_in' : request.user.is_authenticated}
     return render(request, 'events/event_list.html', context)

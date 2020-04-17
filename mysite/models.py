@@ -16,9 +16,8 @@ class Photo(models.Model):
   priority                = models.IntegerField       (default=100)
   is_live                 = models.BooleanField       (default=True)
   title                   = models.TextField          (blank=True, null=True)
-  cover                   = models.ImageField         (blank=True, null=True, upload_to='images/')
-  #editable                = models.BooleanField       (default=False)
-  created_date            = models.DateTimeField      (blank=True, null=True, default=timezone.now)
+  cover                   = models.ImageField         (upload_to='images/')
+  created_date            = models.DateTimeField      (default=timezone.now)
   def __str__(self):
     return self.title
 
