@@ -1,16 +1,17 @@
+#from django.views.generic           import DeleteView
+#from .models                        import Event,Amendment
+#from .forms                         import EventForm, HostForm, AttendeeForm
 from django.shortcuts               import render, get_object_or_404, redirect
 from django.utils                   import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models     import User
 from users.models                   import Person
 from mysite.models                  import Site, Photo
-from .models                        import Event,Amendment
-from .forms                         import EventForm, HostForm, AttendeeForm
+from .models                        import Event
+from .forms                         import EventForm
 from mysite.settings                import TITLE
-
 from django.views.generic           import CreateView
 from django.views.generic           import UpdateView
-from django.views.generic           import DeleteView
 from django.urls                    import reverse_lazy
 
 """
@@ -26,9 +27,9 @@ class EventInsert(CreateView):
     form_class                  = EventForm
     template_name               = 'events/event_insert_update.html'
     success_url                 = reverse_lazy('homepage')
-    def form_valid(self, form):
-      form.instance.author      = self.request.user
-      return super(EventInsert, self).form_valid(form)
+    #def form_valid(self, form):
+      #form.instance.author      = self.request.user
+      #return super(EventInsert, self).form_valid(form)
 
 #@login_required
 class EventUpdate(UpdateView):
@@ -37,24 +38,25 @@ class EventUpdate(UpdateView):
     template_name               = 'events/event_insert_update.html'
     success_url                 = reverse_lazy('homepage')
 
+"""
 class EventDelete(DeleteView):
     model                       = Event
     form_class                  = EventForm
     template_name               = 'events/event_delete.html'
     success_url                 = reverse_lazy('homepage')
+"""
+
 
 
 # functions which do not update the database
 # and don't require a pk as they don't refer to an specific record
 def event_list(request, periodsought='current'):
-
     if periodsought == 'current':
         events = Event.objects.filter(is_live=True, e_date__gte=timezone.now()).order_by('e_date')
     else:
         events = Event.objects.exclude(is_live=True, e_date__gte=timezone.now()).order_by('-e_date')
 
     site                                            =  get_object_or_404(Site)
-    #if request.user.is_authenticated():
     if request.user.is_authenticated == True:
         activeuser                          = User.objects.get(id=request.user.id)
         activeperson                        = Person.objects.get(username=activeuser.username)
@@ -67,7 +69,24 @@ def event_list(request, periodsought='current'):
     events_augmented = []
     #stored_event_date = '2000-01-01'
     for event in events:
+        if event.e_date                          <  timezone.localtime(timezone.now()).date():
+          event_status_now                       =  'past'
+        elif event.is_live                       == True:
+          event_status_now                       =  'live'
+        else:
+          event_status_now                       = 'deletednonpast'
 
+        event_augmented =  {"event":event, 'event_status_now': event_status_now}
+        events_augmented.append(event_augmented)
+        #{"event":event, "attendees":attendees_string, "hosts":hosts_string, \
+        #'event_status_now': event_status_now, 'first_insert': amendments_list[0:1], 'amendments': amendments_list[1:]}
+    photos 									= Photo.objects.filter(is_live=True).order_by('-priority','-created_date')
+    context = {'events': events_augmented, 'periodsought':periodsought, 'activeperson': activeperson, 'TITLE': TITLE, \
+	    'site': site, 'photos' : photos, 'logged_in' : request.user.is_authenticated}
+    return render(request, 'events/event_list.html', context)
+
+
+"""
         hosts_list = []
         for host in event.hosts.all():
             hosts_list.append(host.display_name)
@@ -84,14 +103,6 @@ def event_list(request, periodsought='current'):
             event.editable                       =   True
         else:
             event.editable                       =   False
-
-        if event.e_date                          <  timezone.localtime(timezone.now()).date():
-          event_status_now                       =  'past'
-        elif event.is_live                       == True:
-          event_status_now                       =  'live'
-        else:
-          event_status_now                       = 'deletednonpast'
-
         amendments_list                          = []
         amendments                               = Amendment.objects.filter(event=event)
         for amendment in amendments:
@@ -100,17 +111,6 @@ def event_list(request, periodsought='current'):
           #amendments_list.append(amendment_person.display_name)
           amendments_list.append(amendment_augmented)
         #amendments_string                        = ', '.join(amendments_list)
-
-        event_augmented = \
-        {"event":event, "attendees":attendees_string, "hosts":hosts_string, \
-        'event_status_now': event_status_now, 'first_insert': amendments_list[0:1], 'amendments': amendments_list[1:]}
-        events_augmented.append(event_augmented)
-    photos 									= Photo.objects.filter(is_live=True).order_by('-priority','-created_date')
-    context = {'events': events_augmented, 'periodsought':periodsought, 'activeperson': activeperson, 'TITLE': TITLE, \
-	    'site': site, 'photos' : photos, 'logged_in' : request.user.is_authenticated}
-    return render(request, 'events/event_list.html', context)
-
-
 # functions which do not update the database
 # but do require a pk as they refer to an existing record
 @login_required
@@ -129,6 +129,7 @@ def event_detail(request, pk):
     persons_list.append(person.display_name)
   persons_string   = ', '.join(persons_list)
   return render(request, 'events/event_detail.html', {'event': event, 'event_status_now': event_status_now, 'persons':persons_string, 'TITLE':TITLE})
+"""
 
 
 # functions which update the database using parameters in the url, without using forms
@@ -140,28 +141,28 @@ def event_detail(request, pk):
 @login_required
 def event_delete(request, pk):
   event                                     = get_object_or_404(Event, pk=pk)
-  if event.e_date                         < timezone.localtime(timezone.now()).date():
-    periodsought                          = 'notcurrent'
-  else:
-    periodsought                          = 'current'
-  event.is_live                         = False
+  event.is_live                             = False
   event.save()
-  return redirect('eventlist', periodsought)
+  if event.e_date                           < timezone.localtime(timezone.now()).date():
+    return redirect('eventlist', 'notcurrent')
+  else:
+    return redirect('eventlist', 'current')
 
 @login_required
 def event_deleteperm(request, pk):
   event                                     = get_object_or_404(Event, pk=pk)
-  if event.e_date                         < timezone.localtime(timezone.now()).date():
-    periodsought                          = 'notcurrent'
+  event.delete()
+  if event.e_date                           < timezone.localtime(timezone.now()).date():
+    return redirect('eventlist', 'notcurrent')
   else:
-    periodsought                          = 'current'
+    return redirect('eventlist', 'current')
+"""
   amendments                               = Amendment.objects.filter(event=event)
   for x in amendments:
     x.delete()
-  event.delete()
+"""
 
-  return redirect('eventlist', periodsought)
-
+"""
 @login_required
 def bookinto(request, pk):
   event                                     = get_object_or_404(Event, pk=pk)
@@ -187,20 +188,20 @@ def leave(request, pk):
   event.attendees.remove(updated_attendee)
   event.save()
   return redirect('eventlist', periodsought)
+"""
 
 
 @login_required
 def restore(request, pk):
   event                                     = get_object_or_404(Event, pk=pk)
-  if event.e_date                         < timezone.localtime(timezone.now()).date():
-    periodsought                          = 'notcurrent'
-  else:
-    periodsought                          = 'current'
-  event.is_live                         = True
+  event.is_live                             = True
   event.save()
-  return redirect('eventlist', periodsought)
+  if event.e_date                           < timezone.localtime(timezone.now()).date():
+    return redirect('eventlist', 'notcurrent')
+  else:
+    return redirect('eventlist', 'current')
 
-
+"""
 # functions which update the database in two stages,  using forms
 # but don't require a pk as they don't refer to an existing record
 @login_required
@@ -301,8 +302,8 @@ def event_update(request, pk):
 
 @login_required
 def hosts_update(request, pk):
-  activeuser                                  =  User.objects.get(id=request.user.id)
   activeperson                                =  Person.objects.get(username=activeuser.username)
+  activeuser                                  =  User.objects.get(id=request.user.id)
   event                                     = get_object_or_404(Event, pk=pk)
 
   if request.method                           != 'POST':
@@ -429,4 +430,4 @@ def event_repeat(request, pk):
         return render(request, 'events/event_insert_update.html', {'form': form})
     else:                                                                                  # i.e. form is not valid, ask user to resubmit it
       return render(request, 'events/event_insert_update.html', {'form': form})
-
+"""

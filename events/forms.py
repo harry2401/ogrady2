@@ -1,9 +1,10 @@
 from django                                 import forms
 from django.forms.widgets                   import CheckboxSelectMultiple
 from .models                                import Event
-from users.models                           import Person
+#from users.models                           import Person
 #from django.contrib.auth.models             import User
 
+"""
 class AttendeeForm(forms.ModelForm):
     class Meta:
         model = Event
@@ -21,8 +22,10 @@ class HostForm(forms.ModelForm):
         super(HostForm, self).__init__(*args, **kwargs)
         self.fields["hosts"].widget = CheckboxSelectMultiple()
         self.fields["hosts"].queryset = Person.objects.filter(status__lte=60).exclude(status=10).order_by('display_name')
+"""
 
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ('e_date', 'detail_public', 'detail_private', 'photo_cover')
+        #fields = ('e_date', 'detail_public', 'detail_private', 'photo_cover')
+        fields = ('e_date', 'detail_private')

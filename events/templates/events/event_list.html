@@ -1,9 +1,11 @@
 {% extends "mysite/base.html" %}
 {% block content %}
 
+{% comment %}
   {% if logged_in == False %}
     <a class="btn btn-default" href="{% url 'enquiryinsert' %}"><span>Click here to send us a message</span></a>
   {% endif %}
+{% endcomment %}
 
     {% if activeperson.status >= 60 %}
         {% if periodsought == 'current' %}
@@ -11,8 +13,6 @@
             <a class="btn btn-default" href="{% url 'noticedelete' %}" >Delete notice</span></a>
         {% endif %}
     {% endif %}
-
-
 
   {% if activeperson.status >= 60 %}
     {% if periodsought == 'current' %}
@@ -70,153 +70,63 @@
   {% endif %}
 {% endcomment %}
 
-    {% if activeperson.status >= 60 %}
       {% if site.notice %}
-      <br><br>
-      <hr class=end>
+      <br>
       <h1 class="label">Notice</h1>
       <h2 class='item'><span class='detail'>{{site.notice}}</span></h2>
       {% endif %}
-    {% endif %}
 
-    {% comment %}
-    {% if activeperson.status >= 60 %}
-      {% if site.contact_info %}
-        <h2 class='item'><span class='detail'>{{site.contact_info}}</span></h2>
-      {% endif %}
-    {% endif %}
-    {% endcomment %}
+    <a class="btn btn-default" href='https://www.youtube.com/watch?v=c8PQDMbzN6A&feature=youtu.be' target='_blank' %}>Nicki's Face Mask Video</span></a>
 
 {% if events %}
-<br><br>
-<hr class=end>
-<h1 class="label">Programme of planned O'Grady Court events</h1>
+    <br><br>
+    <hr class=end>
+    <h1 class="label">Programme of planned O'Grady Court events</h1>
 {% endif %}
 
-  {% for x in events %}
+{% for x in events %}
 <hr>
     <h2>
-      <span class='date'> {{ x.event.e_date|date:"l" }} {{ x.event.e_date|date:"jS F Y" }} </span>
-    {% if x.event.editable == True %}
-        {% if periodsought == 'current' %}
-{% comment %}
-            <a class="btn btn-default" href="{% url 'bookinto' pk=x.event.pk %}">
-            <span>Book in</span></a>
-            <a class="btn btn-default" href="{% url 'leave' pk=x.event.pk %}">
-            <span>Leave event</span></a>
-{% endcomment %}
-            <a class="btn btn-default" href="{% url 'eventupdate' pk=x.event.pk %} ">
-            <span>Update event</span></a>
-{% comment %}
-            <a class="btn btn-default" href="{% url 'eventrepeat' pk=x.event.pk %} ">
-            <span>Repeat event</span></a>
-            <a class="btn btn-default" href="{% url 'hostsupdate' pk=x.event.pk %} ">
-            <span>Update hosts</span></a>
-            <a class="btn btn-default" href="{% url 'attendeesupdate' pk=x.event.pk %} ">
-            <span>Update attendees</span></a>
-{% endcomment %}
-            <a class="btn btn-default" href="{% url 'eventdelete' pk=x.event.pk %}">
-            <span>Delete event</span></a>
-        {% else %}
-            {% if x.event_status_now == 'past'%}
-                <a class="btn btn-default" href="{% url 'eventupdate' pk=x.event.pk %} ">
-                <span>Publish this event with a current date</span></a>
-            {% else %}                                                                   {# i.e. event_status_now is 'live' or 'deletednonpast' #}
-                <a class="btn btn-default" href="{% url 'eventrestore' pk=x.event.pk %} "><span>Restore this event</span></a>
+    <span class='date'> {{ x.event.e_date|date:"l" }} {{ x.event.e_date|date:"jS F Y" }} </span>
+    {% if activeperson.status >= 60 %}
+          {% if periodsought == 'current' %}
+                <a class="btn btn-default" href="{% url 'eventupdate' pk=x.event.pk %} "> <span>Update event</span></a>
+                <a class="btn btn-default" href="{% url 'eventdelete' pk=x.event.pk %}"> <span>Delete event</span></a>
+          {% else %}
+                {% if x.event_status_now == 'past'%}
+                     <a class="btn btn-default" href="{% url 'eventupdate' pk=x.event.pk %} "> <span>Publish this event with a current date</span></a>
+                {% else %}                                                                   {# i.e. event_status_now is 'live' or 'deletednonpast' #}
+                      <a class="btn btn-default" href="{% url 'eventrestore' pk=x.event.pk %} "><span>Restore this event</span></a>
                 {% endif %}
                 <a class="btn btn-default" href="{% url 'eventdeleteperm' pk=x.event.pk %} "> <span>Permanently delete  this event</span></a>
-            {% endif %}
-{% comment %}
-      {% else %}
-          {% if periodsought == 'current' %}
-              {% if activeperson.status >= 30 %}
-                  <a class="btn btn-default" href="{% url 'bookinto' pk=x.event.pk %}"> <span>Book in</span></a>
-                  <a class="btn btn-default" href="{% url 'leave' pk=x.event.pk %}"> <span>Leave event</span></a>
-              {% elif activeperson.status >= 15 %}
-                  <a class="btn btn-default" href="{% url 'bookinto' pk=x.event.pk %}"><span>Click here to book into this event</span></a>
-                  <a class="btn btn-default" href="{% url 'leave' pk=x.event.pk %}"> <span>Click here to leave this event</span></a>
-              {% endif %}
           {% endif %}
-{% endcomment %}
-      {% endif %}
-
-      <h2 class="item"><span class='detail'>{{ x.event.detail_public|linebreaks }}</span></h2>
-
-      {% if activeperson.status >= 60 or site.private_site == False %}
-          <h2 class="item"><span class='detail'>{{ x.event.detail_private|linebreaks }}</span></h2>
-{% comment %}
-          <h2><span class='label'>Host(s):  </span>&nbsp;&nbsp;<span class='attendees'>{{ x.hosts }}    </span></a></h2>
-          <h2><span class='label'>Attendees:</span>&nbsp;&nbsp;<span class='attendees'>{{ x.attendees }}</span></a></h2>
-          {% if x.event.photo_cover %}
-              <img src="{{ x.event.photo_cover.url}}", height="300", width="auto", alt="{{ x.event.detail_public }}">
-          {% endif %}
-{% endcomment %}
-      {% endif %}
-
-{% comment %}
-      {% if activeperson.status >= 70 %}
-          <h2><span class='label'>Author:</h2>
-          {% for y in x.first_insert %}
-              <h2><span class='label'> </span>
-                  <a>&nbsp;&nbsp;<span class='attendees'> {{ y.name }}&nbsp;{{y.date}}</span></a></h2>
-          {% endfor %}
-          <h2><span class='label'>Amendments:</h2>
-          {% for y in x.amendments %}
-              <h2><span class='label'> </span>
-                  <a>&nbsp;&nbsp;<span class='attendees'> {{ y.name }}&nbsp;{{y.date}}</span></a></h2>
-          {% endfor %}
-      {% endif %}
-{% endcomment %}
-      {% endfor %}
-  </h2>
-<br><br>
-<hr class=end>
-<h1 class="label">Pictures of O'Grady Court events</h1>
-{% comment %}
-<h1>Coffeepot photos</h1>
-    <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >View current events</span></a>
-    <a class="btn btn-default" href="{% url 'photoinsert' %}"><span>Add photo</span></a>
-{% endcomment %}
-<ul>
-  {% for photo in photos %}
-	<hr>
-      <h2 class='item'><span class='detail'>{{photo.title}}</span></h2>
-     {% if activeperson.status >= 60 %}
-{% comment %}
-      <a class="btn btn-default" href="{% url 'photoauthorupdate' pk=photo.pk %}"><span>Update author</span></a>
-{% endcomment %}
-      <a class="btn btn-default" href="{% url 'photopriorityupdate' pk=photo.pk %}"><span>Update priority</span></a>
-      <a class="btn btn-default" href="{% url 'phototitleupdate' pk=photo.pk %}"><span>Update title</span></a>
-      <a class="btn btn-default" href="{% url 'photodelete' pk=photo.pk %}"><span>Delete photo</span></a>
-      <h2 class="label"><span class='date'>Priority = {{photo.priority}}</span></h2>
-{% comment %}
-    {% elif activeperson.username == photo.authorname %}
-      <a class="btn btn-default" href="{% url 'phototitleupdate' pk=photo.pk %}"><span>Update title</span></a>
-      <a class="btn btn-default" href="{% url 'photodelete' pk=photo.pk %}"><span>Delete photo</span></a>
-{% endcomment %}
     {% endif %}
-	<h2>
-          <img src="{{ photo.cover.url}}", height="auto", width="1170", alt="{{ photo.title }}">
-      	</h2>
-  {% endfor %}
+
+    <h2 class="item"><span class='detail'>{{ x.event.detail_private|linebreaks }}</span></h2>
+
+{% endfor %}
+
+{% if photos %}
+    <br><br>
+    <hr class=end>
+    <h1 class="label">Pictures of O'Grady Court events</h1>
+{% endif %}
+
+<ul>
+{% for photo in photos %}
+	<hr>
+    <h2 class='item'><span class='detail'>{{photo.title}}</span></h2>
+        {% if activeperson.status >= 60 %}
+            <a class="btn btn-default" href="{% url 'photopriorityupdate' pk=photo.pk %}"><span>Update priority</span></a>
+            <a class="btn btn-default" href="{% url 'phototitleupdate' pk=photo.pk %}"><span>Update title</span></a>
+            <a class="btn btn-default" href="{% url 'photodelete' pk=photo.pk %}"><span>Delete photo</span></a>
+            <h2 class="label"><span class='date'>Priority = {{photo.priority}}</span></h2>
+        {% endif %}
+        <img src="{{ photo.cover.url}}", height="auto", width="1170", alt="{{ photo.title }}">
+{% endfor %}
 </ul>
 
-{% comment %}
-  <br><br><br>
-  <h2>
-  {% if logged_in == False %}
-      <a class="btn btn-default" href="{% url 'unsubscribe' confirmed='no' %}"><span class='background' style="color:black" >Unsubscribe</span></a>
-  {% endif %}
-  </h2>
-{% endcomment %}
-
-  <h2>
 </body>
-
 {% endblock content %}
 {% comment %}
-
 {% endcomment %}
-
-
-
