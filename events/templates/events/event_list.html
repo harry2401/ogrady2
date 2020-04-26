@@ -38,9 +38,7 @@
     <a class="btn btn-default" href="{% url 'bookmarkinsertupdate' pk=0 mode='insert' %}"><span>Add bookmark</span></a>
   {% endif %}
 
-  {% if activeperson.status >= 60 %}
-    <a class="btn btn-default" href="{% url 'bookmarklist' %}"><span>View bookmarks</span></a>
-  {% endif %}
+  <a class="btn btn-default" href="{% url 'bookmarklist' %}"><span>View bookmarks</span></a>
 
   {% if activeperson.status >= 60 %}
     <a class="btn btn-default" href="{% url 'memberlist' %}"><span>View users</span></a>
@@ -149,7 +147,7 @@
 
 <ul>
   {% for photo in photos %}
-	<hr>
+	<hr> <hr>
       <h2 class="item"><span class='detail'>{{ photo.title }} </span></h2>
       {% if activeperson.status >= 60 %}
           <a class="btn btn-default" href="{% url 'photoupdate' pk=photo.pk mode='priority' %}"><span>Update priority</span></a>

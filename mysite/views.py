@@ -268,14 +268,14 @@ def bookmark_list(request):
 """
 
 def bookmark_list(request):
-    activeuser                                             =  User.objects.get(id=request.user.id)
     if request.user.is_authenticated == True:
-        activeperson                        = Person.objects.get(username=activeuser.username)
+        activeuser                                =   User.objects.get(id=request.user.id)
+        activeperson                              =   Person.objects.get(username=activeuser.username)
     else:
-        activeperson                        = Person.objects.get(username='notloggedin')
-    bookmarks                                              =   Bookmark.objects.filter(is_live=True).order_by('-priority','-created_date')
-    context                                                =   {'bookmarks': bookmarks, 'activeperson' : activeperson}
-    return render                                              (request, 'mysite/bookmark_list.html', context)
+        activeperson                              =   Person.objects.get(username='notloggedin')
+    bookmarks                                     =   Bookmark.objects.filter(is_live=True).order_by('-priority','-created_date')
+    context                                       =   {'bookmarks': bookmarks, 'activeperson' : activeperson, 'logged_in' : request.user.is_authenticated}
+    return render                                     (request, 'mysite/bookmark_list.html', context)
 
 @login_required
 def bookmark_list_deleted(request):
