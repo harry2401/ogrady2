@@ -5,8 +5,8 @@ from django.shortcuts               import render, get_object_or_404, redirect
 from django.utils                   import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models     import User
+from mysite.models                  import Site, Photo, Bookmark
 from users.models                   import Person
-from mysite.models                  import Site, Photo
 from .models                        import Event
 from .forms                         import EventForm
 from mysite.settings                import TITLE

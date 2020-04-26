@@ -1,15 +1,12 @@
 from django                                 import forms
-from .models                                import Site, Photo,  EnquiryB
-#from .models                                import Site, Photo
-#from .models                                import PhotoB
+from .models                                import Site, Photo,  EnquiryB, Bookmark
 
-class advertUpdateForm(forms.ModelForm):
+class SiteadvertForm(forms.ModelForm):
     class Meta:
         model = Site
         fields = ( 'notice' ,)
-        #fields = ( 'notice', )
 
-class noteUpdateForm(forms.ModelForm):
+class SitenoteForm(forms.ModelForm):
     class Meta:
         model = Site
         fields = ('note',)
@@ -19,14 +16,29 @@ class PhotoInsertForm(forms.ModelForm):
         model = Photo
         fields = ('title', 'cover')
 
-class PhotopriorityUpdateForm(forms.ModelForm):
+class PhotopriorityForm(forms.ModelForm):
     class Meta:
         model = Photo
         fields = ('priority',)
 
-class PhototitleUpdateForm(forms.ModelForm):
+class PhototitleForm(forms.ModelForm):
     class Meta:
         model = Photo
+        fields = ('title',)
+
+class BookmarkInsertForm(forms.ModelForm):
+    class Meta:
+        model = Bookmark
+        fields = ('title', 'address')
+
+class BookmarkpriorityForm(forms.ModelForm):
+    class Meta:
+        model = Bookmark
+        fields = ('priority',)
+
+class BookmarktitleForm(forms.ModelForm):
+    class Meta:
+        model = Bookmark
         fields = ('title',)
 
 class EnquiryInsertForm(forms.ModelForm):
@@ -34,7 +46,7 @@ class EnquiryInsertForm(forms.ModelForm):
         model = EnquiryB
         fields = ('content',)
 
-class EnquirypriorityUpdateForm(forms.ModelForm):
+class EnquirypriorityForm(forms.ModelForm):
     class Meta:
         model = EnquiryB
         fields = ('priority',)

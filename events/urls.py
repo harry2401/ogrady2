@@ -10,11 +10,10 @@ from .                        import views
 from .views                   import EventInsert, EventUpdate
 
 urlpatterns = [
-    path('',                                              views.event_list,                   name='homepage'),
     path('eventlist/<slug:periodsought>/)',               views.event_list,                   name='eventlist'),
     #path('eventdetail/,int:pk>/)',                        views.event_detail,                 name='eventdetail'),
 #
-    path('eventinsert',                                   EventInsert.as_view(),                name='eventinsert'),
+    path('Z3E4ttud124rv6eventinsert',                     EventInsert.as_view(),                name='eventinsert'),
     path('eventrestore/<int:pk>/)',                       views.restore,                      name='eventrestore'),
     #path('eventrepeat/<int:pk>/)',                        views.event_repeat,                 name='eventrepeat'),
 #

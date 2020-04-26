@@ -1,0 +1,30 @@
+{% extends "mysite/base.html" %}
+{% block content %}
+
+<h1 class="label">Deleted bookmarks</h1>
+<br><br>
+<p>
+    <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >Return to Main Page</span></a>
+    <a class="btn btn-default" href="{% url 'bookmarkinsertupdate' pk=0 mode='insert' %}"><span>Add bookmark</span></a>
+</p>
+<br>
+<ul>
+  {% for bookmark in bookmarks %}
+     <hr>
+      <h2>{{ bookmark.title }}</h2>
+      <a class="btn btn-default" href=((bookmark.address}} target='_blank' %}>{{bookmark.title}}</span></a>
+      <a class="btn btn-default" href="{% url 'bookmarkchange'    pk=bookmark.pk mode='restore' %}">      <span>Restore bookmark</span></a>
+      <a class="btn btn-default" href="{% url 'bookmarkchange'    pk=bookmark.pk mode='deleteperm' %}">   <span>Delete bookmark permanantly</span></a>
+  {% endfor %}
+</ul>
+
+</body>
+{% endblock content %}
+{% comment %}
+<a class="btn btn-default" href='https://www.youtube.com/watch?v=c8PQDMbzN6A&feature=youtu.be' target='_blank' %}>Nicki's Face Mask Video</span></a>
+      <a class="btn btn-default" href="{% url 'photoauthorupdate'   pk=photo.pk %}"><span>Update author</span></a>
+      <a class="btn btn-default" href="{% url 'photopriorityupdate' pk=photo.pk %}"><span>Update priority</span></a>
+    {% elif activeperson.username == photo.authorname %}
+      <a class="btn btn-default" href="{% url 'photorestore'        pk=photo.pk %}"><span>Restore photo</span></a>
+      <a class="btn btn-default" href="{% url 'photodeleteperm'     pk=photo.pk %}"><span>Delete photo permanantly</span></a>
+{% endcomment %}

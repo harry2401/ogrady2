@@ -2,38 +2,32 @@
 {% block content %}
 
 <h1 class = "label">O'Grady Court photos</h1>
-<br><br>
-    <p>
     <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >Return to Main Page</span></a>
     <a class="btn btn-default" href="{% url 'photoinsert' %}"><span>Add photo</span></a>
-    </p>
 <br>
 <ul>
   {% for photo in photos %}
 	<hr>
       <h2 class="item"><span class='detail'>{{ photo.title }} </span></h2>
-     {% if activeperson.status >= 60 %}
-{% comment %}
-      <a class="btn btn-default" href="{% url 'photoauthorupdate' pk=photo.pk %}"><span>Update author</span></a>
-{% endcomment %}
-      <a class="btn btn-default" href="{% url 'photopriorityupdate' pk=photo.pk %}"><span>Update priority</span></a>
-      <a class="btn btn-default" href="{% url 'phototitleupdate' pk=photo.pk %}"><span>Update title</span></a>
-      <a class="btn btn-default" href="{% url 'photodelete' pk=photo.pk %}"><span>Delete photo</span></a>
-      <h2 class="label"><span class='date'>Priority = {{photo.priority}}</span></h2>
-{% comment %}
-      <h1 class = "label">O'Grady Court photos</h1>
-    {% elif activeperson.username == photo.authorname %}
-      <a class="btn btn-default" href="{% url 'phototitleupdate' pk=photo.pk %}"><span>Update title</span></a>
-      <a class="btn btn-default" href="{% url 'photodelete' pk=photo.pk %}"><span>Delete photo</span></a>
-{% endcomment %}
-{% endif %}
-<h2>
+      {% if activeperson >= 60 %}
+          <a class="btn btn-default" href="{% url 'photoupdate' pk=photo.pk mode='priority' %}"><span>Update priority</span></a>
+          <a class="btn btn-default" href="{% url 'photoupdate' pk=photo.pk mode='title' %}"><span>Update title</span></a>
+          <a class="btn btn-default" href="{% url 'photochange' pk=photo.pk mode='deletetemp' %}"><span>Delete photo</span></a>
+          <h2 class="label"><span class='date'>Priority = {{photo.priority}}</span></h2>
+          <h2 class="label"><span class='date'>Date uploaded = {{photo.created_date}}</span></h2>
+      {% endif %}
+      <h2>
+          <a class='item'>Likes = {{photo.upticks}}</a>
+          {% if photo.already_liked == False %}
+              <a class="btn btn-default" href="{% url 'photochange' pk=photo.pk mode='uptick' %}"><span>Like this photo</span></a>
+          {% endif %}
           <img src="{{ photo.cover.url}}", height="auto", width="1100", alt="{{ photo.title }}">
-      	</h2>
+     </h2>
   {% endfor %}
 </ul>
 
 </body>
 {% endblock content %}
 {% comment %}
+<br><br>
 {% endcomment %}

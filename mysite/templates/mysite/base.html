@@ -15,23 +15,40 @@
   {% if activeperson.reversevideo == False %}
     hr { color: 'black'; background-color: 'black'}}; font-weight:bold; }
     hr.end { color: 'black'; background-color: 'black'}}; font-weight:bold; }
-    h1,  h1 a, h1:visited, h1 a:visited,  h1 a:active { margin-top: 0; padding: 20px 20px 20px 40px;
-      color: {{activeperson.datecolor}}; background-color:{{activeperson.backgroundcolor}}; font-size: xx-large;
-      font-weight:bold; font-family: 'Arial'; text-align:center; text-decoration: none; }
+    h1,  h1 a, h1:visited, h1 a:visited,  h1 a:active { 
+      margin-top: 0; 
+      padding: 20px 20px 20px 40px;
+      font-size: xx-large;
+      font-weight:bold; 
+      font-family: 'Arial'; 
+      color: {{activeperson.datecolor}}; 
+      text-align:center; 
+      text-decoration: none; }
+      background-color:{{activeperson.backgroundcolor}}; 
     h1.label , h1.label :visited { margin-top: 0; padding: 20px 20px 20px 40px;
       color: {{activeperson.datecolor}}; font-size: xx-large; font-weight:bold;
       font-family: 'Arial'; text-align:center; text-decoration: none; }
-    h2.item , h2.item :visited { color: {{activeperson.backgroundcolor}}; }
-    h2 span.label , h2 span.label :visited { font-size: x-large; font-weight:bold; color: {{activeperson.datecolor}}; }
-    a.label , a .label :visited { font-size: x-large; font-weight:bold; color: {{activeperson.datecolor}}; }
-    a.label2 , a .label :visited { font-size: x-large; font-weight:bold; color: {{activeperson.attendeescolor}}; }
+    h2 span.label , h2 span.label :visited { 
+      font-size: x-large; 
+      font-weight:bold; 
+      color: {{activeperson.datecolor}}; }
     h2 span.date , h2 span.date :visited { font-size: x-large; font-weight:bold; color: {{activeperson.datecolor}}; }
     h2 span.detail , h2 span.detail :visited { font-size: x-large; font-weight:bold; color: {{activeperson.detailcolor}}; }
     h2 span.attendees , h2 span.attendees :visited { font-size: x-large; font-weight:bold; color: {{activeperson.attendeescolor}}; }
     {# h2 span.background , h2 span.background :visited { font-size: x-large; font-weight:bold; color: {{activeperson.backgroundcolor}}; } #}
     h2 span.background , h2 span.background :visited { font-size: x-large; font-weight:bold; color: black; }
-   h2 a span.background , h2 a span.background :visited { font-size: x-large; font-weight:bold; color: black; }
+    h2 a span.background , h2 a span.background :visited { font-size: x-large; font-weight:bold; color: black; }
     h2 span.author , h2 span.author :visited { color: #DF9000; font-size: x-large; font-weight:bold; }
+    h2.date a span , h2.date a span :visited { color: black; }
+    h2 a span:visited { color: 'black'; }
+    h2.item , h2.item :visited { 
+      color: {{activeperson.datecolor}}; }
+      font-size: xx-large;
+      font-weight:bold; 
+      font-family: 'Arial'; 
+    a.label , a.label :visited { font-size: x-large; font-weight:bold; color: {{activeperson.datecolor}}; }
+    a.label2 , a.label2 :visited { font-size: x-large; font-weight:bold; color: {{activeperson.attendeescolor}}; }
+    a.label3 , a.label :visited { font-size: xx-large; font-weight:bold; color: {{activeperson.datecolor}}; }
     body { background-color:{{activeperson.backgroundcolor}}; }
     body { color:{{activeperson.backgroundcolor}}; }
     td { color: {{activeperson.datecolor}}; padding-left:15px; }
@@ -50,13 +67,21 @@
       font-weight:bold; font-family: 'Arial'; text-decoration: none; }
     h2.item , h2.item:visited { color: {{activeperson.backgroundcolor_rev}}; }
     h2 span.label , h2 span.label:visited { font-size: x-large; font-weight:bold; color: {{activeperson.datecolor_rev}}; }
-    a.label , a .label :visited { font-size: x-large; font-weight:bold; color: {{activeperson.datecolor_rev}}; }
-    a.label2 , a .label :visited { font-size: x-large; font-weight:bold; color: {{activeperson.attendeescolor_rev}}; }
     h2 span.date , h2 span.date:visited { font-size: x-large; font-weight:bold; color: {{activeperson.datecolor_rev}}; }
     h2 span.detail , h2 span.detail:visited { font-size: x-large; font-weight:bold; color: {{activeperson.detailcolor_rev}}; }
     h2 span.attendees , h2 span.attendees:visited { font-size: x-large; font-weight:bold; color: {{activeperson.attendeescolor_rev}}; }
     h2 span.background , h2 span.background:visited { font-size: x-large; font-weight:bold; color: {{activeperson.backgroundcolor_rev}}; }
     h2 span.author , h2 span.author:visited { color: #DF9000; font-size: x-large; font-weight:bold; }
+    h2.date a span , h2.date a span :visited { color: white; }
+    h2 a span:visited { color: 'white'; }
+    h2.item , h2.item :visited { 
+      color: {{activeperson.datecolor_rev}}; }
+      font-size: xx-large;
+      font-weight:bold; 
+      font-family: 'Arial'; 
+    a.label , a.label :visited { font-size: x-large; font-weight:bold; color: {{activeperson.datecolor_rev}}; }
+    a.label2 , a.label2 :visited { font-size: x-large; font-weight:bold; color: {{activeperson.attendeescolor_rev}}; }
+    a.label3 , a.label :visited { font-size: xx-large; font-weight:bold; color: {{activeperson.datecolor_rev}}; }
     body { background-color:{{activeperson.backgroundcolor_rev}}; } 
     body { color:{{activeperson.backgroundcolor_rev}}; }
     td { color: {{activeperson.datecolor_rev}}; padding-left:15px; }
@@ -65,10 +90,8 @@
     .top-menu, .top-menu:hover, .top-menu:visited { color: {{activeperson.datecolor_rev}}; float: right; font-size: 26pt; margin-right: 20px; }
     {% endif %}
 
-    h2.date a span , h2.date a span :visited { color: black; }
     h2.error , h2.error :visited { color: #FF0000; }
     h2 a span { color: 'crimson'; }
-    h2 a span:visited { color: 'black'; }
 </style>
 </head>
 <body>

@@ -1,6 +1,6 @@
-<h1>Update photo</h1>
+<h1>Insert/Update photo</h1>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit">Insert photo</button>
+  <button type="submit">Insert/Update photo</button>
 </form>

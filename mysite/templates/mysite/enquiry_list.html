@@ -9,8 +9,10 @@
      {% if activeperson.status >= 60 %}
         <hr>
         <h2><span class='date'> {{ enquiry.created_date|date:"l" }} {{ enquiry.created_date|date:"jS F Y g:i a" }} </span>
-        <a class="btn btn-default" href="{% url 'enquirypriorityupdate' pk=enquiry.pk %}"><span>Update priority</span></a>
-        <a class="btn btn-default" href="{% url 'enquirydelete' pk=enquiry.pk %}"><span>Delete message</span></a></h2>
+{% comment %}
+        <a class="btn btn-default" href="{% url 'enquiryupdate' pk=enquiry.pk %}"><span>Update priority</span></a>
+{% endcomment %}
+        <a class="btn btn-default" href="{% url 'enquirychange' pk=enquiry.pk mode='deletetemp'%}"><span>Delete message</span></a></h2>
         <h2><span class="attendees">{{ enquiry.content }}</span></h2>
      {% endif %}
   {% endfor %}

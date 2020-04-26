@@ -1,0 +1,34 @@
+{% extends "mysite/base.html" %}
+{% block content %}
+
+<h2 class = "item"><a>Bookmarks</a>
+    <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >                       <span>Return to Main Page</span></a>
+    <a class="btn btn-default" href="{% url 'bookmarkinsertupdate' pk=0 mode='insert' %}">     <span>Add bookmark</span></a>
+</h2>
+
+<br>
+<ul>
+{% for bookmark in bookmarks %}
+	<hr>
+      {% if activeperson.status >= 60 %}
+      <p>
+      <a class="label3"><span class='detail'>Priority = {{bookmark.priority}}</span></a>
+      <a class="btn btn-default" href="{% url 'bookmarkinsertupdate' pk=bookmark.pk mode='priority' %}">      <span>Update priority</span></a>
+      <a class="btn btn-default" href="{% url 'bookmarkinsertupdate' pk=bookmark.pk mode='title' %}">         <span>Update title</span></a>
+      <a class="btn btn-default" href="{% url 'bookmarkchange' pk=bookmark.pk mode='deletetemp' %}">          <span>Delete bookmark</span></a>
+      <h2 class="label"><span class='date'>Date inserted = {{bookmark.created_date}}</span></h2>
+      </p>
+      {% endif %}
+      <a class="btn btn-default" href="{{bookmark.address}}" target='_blank' %}><span>{{bookmark.title}}</span></a>
+      {% if activeperson.status >= 60 %}
+          <a class="label3"><span class='detail'>{{bookmark.address}}</span></a>
+      {% endif %}
+{% endfor %}
+</ul>
+
+</body>
+{% endblock content %}
+{% comment %}
+<h1 class = "label"><span class='detail'>Bookmarks</span></h1>
+      <h2 class="item"><span class='detail'>Priority = {{bookmark.priority}}</span></h2>
+{% endcomment %}

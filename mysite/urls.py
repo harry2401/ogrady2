@@ -5,6 +5,7 @@ from django.conf.urls.static    import static
 from .                          import views
 from .views                     import PhotoInsert
 urlpatterns = [
+    path('',                                    views.homepage,                                   name='homepage'),
     path('logout/',                             views.logout,                    {'next_page': settings.LOGOUT_REDIRECT_URL},  name='logout'),
     path('accounts/',                           include('django.contrib.auth.urls')),
     path('accounts/profile/' ,                  views.fromlogin ),
@@ -13,33 +14,35 @@ urlpatterns = [
 #
     path('noticeupdate',             	        views.notice_update,                                                           name='noticeupdate'),
     path('noticedelete',             	        views.notice_delete,                                                           name='noticedelete'),
+#
     path('noteupdate',                          views.note_update,                                                             name='noteupdate'),
 #
 #
-    path('photolist',                           views.photo_list,                                                              name='photolist'),
-    path('photolistdeleted',                    views.photo_list_deleted,                                                      name='photolistdeleted'),
 #
-    path('photoinsert',                         PhotoInsert.as_view(),                                                         name='photoinsert'),
+    path('photolist',                                    views.photo_list,                        name='photolist'),
+    path('photolistdeleted',                             views.photo_list_deleted,                name='photolistdeleted'),
 #
-    #path('photoauthorupdate/<int:pk>/',         views.photoauthor_update,                                                      name='photoauthorupdate'),
-    path('photopriorityupdate/<int:pk>/',       views.photopriority_update,                                                    name='photopriorityupdate'),
-    path('phototitleupdate/<int:pk>/',          views.phototitle_update,                                                       name='phototitleupdate'),
-    path('photorestore/<int:pk>/',              views.photo_restore,                                                           name='photorestore'),
-    path('photodelete/<int:pk>/',               views.photo_delete,                                                            name='photodelete'),
+    path('qawsd345d7u',                                  PhotoInsert.as_view(),                   name='photoinsert'),
+    path('photoupdate/<int:pk>/<slug:mode>/)',           views.photo_update,                      name='photoupdate'),
 #
-    path('photodeleteperm/<int:pk>/',           views.photo_delete_perm,                                                       name='photodeleteperm'),
+    path('photochange/<int:pk>/<slug:mode>/)',           views.photo_change,                      name='photochange'),
+#
+    path('bookmarklist',                                 views.bookmark_list,                     name='bookmarklist'),
+    path('bookmarklistdeleted',                          views.bookmark_list_deleted,             name='bookmarklistdeleted'),
+#
+    path('bookmarkinsertupdate/<int:pk>/<slug:mode>/)',  views.bookmark_insert_update,            name='bookmarkinsertupdate'),
+#
+    path('bookmarkchange/<int:pk>/<slug:mode>/)',        views.bookmark_change,                   name='bookmarkchange'),
 #
 #
-    path('enquirylist',                         views.enquiry_list,                                                            name='enquirylist'),
-    path('enquirylistdeleted',                  views.enquiry_list_deleted,                                                    name='enquirylistdeleted'),
 #
-    path('enquiryinsert',                       views.enquiry_insert,                                                          name='enquiryinsert'),
+    path('enquirylist',                                     views.enquiry_list,                                name='enquirylist'),
+    path('enquirylistdeleted',                              views.enquiry_list_deleted,                        name='enquirylistdeleted'),
 #
-    path('enquirypriorityupdate/<int:pk>/',     views.enquirypriority_update,                                           name='enquirypriorityupdate'),
-    path('enquiryrestore/<int:pk>/',            views.enquiry_restore,                                                  name='enquiryrestore'),
-    path('enquirydelete/<int:pk>/',             views.enquiry_delete,                                                     name='enquirydelete'),
+    path('enquiryinsert',                                   views.enquiry_insert,                              name='enquiryinsert'),
+    path('enquiryupdate/<int:pk>/',                         views.enquiry_update,                              name='enquiryupdate'),
 #
-    path('enquirydeleteperm/<int:pk>/',         views.enquiry_deleteperm,                                                 name='enquirydeleteperm'),
+    path('enquirychange/<int:pk>/<slug:mode>/)',            views.enquiry_change,                              name='enquirychange'),
 #
 #
     path('',                                    include('events.urls')),

@@ -5,13 +5,8 @@ from django.utils                           import timezone
 
 class Person(models.Model):
   STATUSES = (
-        (5, 'Contact'),
-        (10, 'Public'),
-        (15, 'Prospective'),
-        (30, 'Member'),
-        (40, 'Committee'),
-        (50, 'Treasurer'),
-        (60, 'Chair'),
+        (20, 'Member'),
+        (60, 'Manager'),
   )
   username                = models.CharField                 (max_length=20, unique=True, blank=True, null=True)
   email                   = models.EmailField                (max_length=40, unique=True, blank=True, null=True)
@@ -21,7 +16,7 @@ class Person(models.Model):
   phone_a                 = models.CharField                 (max_length=20, blank=True, null=True)
   phone_b                 = models.CharField                 (max_length=20, blank=True, null=True)
   password                = models.CharField                 (max_length=30, blank=True, null=True)
-  status                  = models.IntegerField              (default=15, choices=STATUSES)
+  status                  = models.IntegerField              (default=20, choices=STATUSES)
   reversevideo            = models.BooleanField              (default=False)
   datecolor               = models.CharField                 (max_length=20, default='black')
   detailcolor             = models.CharField                 (max_length=20, default='#0000C0')
@@ -31,7 +26,6 @@ class Person(models.Model):
   detailcolor_rev         = models.CharField                 (max_length=20, default='aqua')
   attendeescolor_rev      = models.CharField                 (max_length=20, default='lawngreen')
   backgroundcolor_rev     = models.CharField                 (max_length=20, default='black')
-  cover                   = models.ImageField                (blank=True, null=True, upload_to='images/')
   notes                   = models.TextField                 (blank=True, null=True)
   last_login_date         = models.DateTimeField             (blank = True, null = True)
   last_logout_date        = models.DateTimeField             (blank = True, null = True)

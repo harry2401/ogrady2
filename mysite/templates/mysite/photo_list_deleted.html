@@ -1,7 +1,7 @@
 {% extends "mysite/base.html" %}
 {% block content %}
 
-<h1 class="label">Coffeepot deleted photos</h1>
+<h1 class="label">Deleted photos</h1>
 <br><br>
 <p>
     <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >Return to Main Page</span></a>
@@ -12,9 +12,9 @@
   {% for photo in photos %}
      <hr>
      {% if activeperson.status >= 60 %}
-      <a class="btn btn-default" href="{% url 'phototitleupdate'    pk=photo.pk %}"><span>Update title</span></a>
-      <a class="btn btn-default" href="{% url 'photorestore'        pk=photo.pk %}"><span>Restore photo</span></a>
-      <a class="btn btn-default" href="{% url 'photodeleteperm'     pk=photo.pk %}"><span>Delete photo permanantly</span></a>
+      <a class="btn btn-default" href="{% url 'photoupdate'    pk=photo.pk mode='title' %}">        <span>Update title</span></a>
+      <a class="btn btn-default" href="{% url 'photochange'    pk=photo.pk mode='restore' %}">      <span>Restore photo</span></a>
+      <a class="btn btn-default" href="{% url 'photochange'    pk=photo.pk mode='deleteperm' %}">   <span>Delete photo permanantly</span></a>
     {% endif %}
       <h2>{{ photo.title }}</h2>
           <img src="{{ photo.cover.url}}", height="300", width="auto", alt="{{ photo.title }}">
@@ -25,9 +25,4 @@
 </body>
 {% endblock content %}
 {% comment %}
-      <a class="btn btn-default" href="{% url 'photoauthorupdate'   pk=photo.pk %}"><span>Update author</span></a>
-      <a class="btn btn-default" href="{% url 'photopriorityupdate' pk=photo.pk %}"><span>Update priority</span></a>
-    {% elif activeperson.username == photo.authorname %}
-      <a class="btn btn-default" href="{% url 'photorestore'        pk=photo.pk %}"><span>Restore photo</span></a>
-      <a class="btn btn-default" href="{% url 'photodeleteperm'     pk=photo.pk %}"><span>Delete photo permanantly</span></a>
 {% endcomment %}

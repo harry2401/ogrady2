@@ -6,13 +6,11 @@
 <ul>
   {% for enquiry in enquirys %}
         <hr>
-     {% if activeperson.status == 60 %}
         <hr>
         <h2><span class='date'> {{ enquiry.created_date|date:"l" }} {{ enquiry.created_date|date:"jS F Y g:i a" }} </span>
-        <a class="btn btn-default" href="{% url 'enquiryrestore'        pk=enquiry.pk %}"><span>Restore message</span></a>
-        <a class="btn btn-default" href="{% url 'enquirydeleteperm' pk=enquiry.pk %}"><span>Delete message permanantly</span></a></h2>
+        <a class="btn btn-default" href="{% url 'enquirychange' pk=enquiry.pk mode='restore' %}"><span>Restore message</span></a>
+        <a class="btn btn-default" href="{% url 'enquirychange' pk=enquiry.pk mode='deleteperm' %}"><span>Delete message permanantly</span></a></h2>
         <h2><span class="attendees">{{ enquiry.content }}</span></h2>
-    {% endif %}
   {% endfor %}
 </ul>
 </body>
